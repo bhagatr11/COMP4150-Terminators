@@ -1,4 +1,3 @@
-//Connecting to the database
 <?php
 $servername = "localhost";
 $username = "root"; //edit if you have set a username for MySQL
