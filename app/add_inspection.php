@@ -36,8 +36,6 @@
     $sql = "insert into student_flat_inspections(staff_number, inspection_date, satisfactory_condition, additional_comments, flat_number)
     values ('".$_POST["staff_number"]."','".$_POST["inspection_date"]."','".$_POST["satisfactory_condition"]."','".$_POST["additional_comments"]."','".$_POST["flat_number"]."')";
 
-    echo $sql;
-
     if ($conn->query($sql) === TRUE) {
     echo "
         <script type= 'text/javascript'>
