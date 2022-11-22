@@ -30,6 +30,28 @@
 
     // INVOICES
     $sql = "select * from invoice where student_number =".$_POST["id"]." and payment_received = 0;";
+    $student = "select * from student where student_number =".$_POST["id"];
+
+    echo '<h4>Student Info</h4>';
+    echo '<table class="table table-striped" border="0" cellspacing="2" cellpadding="2">
+        <tr>
+            <td> <font face="Arial">First Name</font> </td>
+            <td> <font face="Arial">Last Name</font> </td>
+        </tr>';
+    if ($result = $conn->query($student)) {
+        while ($row = $result->fetch_assoc()) {
+            $FName = $row["first_name"];
+            $LName = $row["last_name"];
+
+            echo '<tr> 
+                    <td>'.$FName.'</td> 
+                    <td>'.$LName.'</td> 
+                </tr>';
+        }
+        $result->free();
+    }
+    echo '</table>';
+
     echo '<h4>Invoices</h4>';
     echo '<table class="table table-striped" border="0" cellspacing="2" cellpadding="2">
         <tr>
