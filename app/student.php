@@ -29,14 +29,22 @@
     if(isset($_POST["submit"])){
 
     // INVOICES
-    $sql = "select * from invoice where student_number =".$_POST["id"];
+    $sql = "select * from invoice where student_number =".$_POST["id"]." and payment_received = 0;";
     echo '<h4>Invoices</h4>';
-    echo '<table class="table table-striped" border="0" cellspacing="2" cellpadding="2"> 
-        <tr> 
-            <td> <font face="Arial">Invoice Number</font> </td> 
+    echo '<table class="table table-striped" border="0" cellspacing="2" cellpadding="2">
+        <tr>
+            <td> <font face="Arial">Invoice Number</font> </td>
             <td> <font face="Arial">Student Number</font> </td>
-            <td> <font face="Arial">Payment Due</font> </td> 
-        </tr>';
+            <td> <font face="Arial">Payment Due</font> </td>
+        </tr>
+        <form method="post" action="paylease.php">
+            <input type="hidden" name="id" value='.$_POST["id"].'>
+            <input type="radio" id="Debit" name="method" value="Debit">
+            <label for="Debit">Debit</label><br>
+            <input type="radio" id="Credit" name="method" value="Credit">
+            <label for="Credit">Credit</label><br>
+            <button type="submit" name="submit" id="submit">Pay Invoice</button>
+        </form>';
 
     if ($result = $conn->query($sql)) {
         while ($row = $result->fetch_assoc()) {
@@ -109,6 +117,37 @@
     }
     echo '</table>';
 
+    // Paid Invoices
+    $sql = "select * from invoice where student_number =".$_POST["id"]." and payment_received = 1;";
+    echo '<h4>Paid Invoices</h4>';
+    echo '<table class="table table-striped" border="0" cellspacing="2" cellpadding="2">
+        <tr>
+            <td> <font face="Arial">Invoice Number</font> </td>
+            <td> <font face="Arial">Lease Number</font> </td>
+            <td> <font face="Arial">Payment Method</font> </td>
+            <td> <font face="Arial">Date Of Payment</font> </td>
+            <td> <font face="Arial">Amount Paid</font> </td>
+        </tr>';
+
+    if ($result = $conn->query($sql)) {
+        while ($row = $result->fetch_assoc()) {
+            $invoice = $row["invoice_number"];
+            $lease = $row["lease_number"];
+            $method = $row["method_of_payment"];
+            $date = $row["date_of_payment"];
+            $amount = $row["payment_due"];
+
+            echo '<tr> 
+                    <td>'.$invoice.'</td> 
+                    <td>'.$lease.'</td> 
+                    <td>'.$method.'</td> 
+                    <td>'.$date.'</td> 
+                    <td>'.$amount.'</td>
+                </tr>';
+        }
+        $result->free();
+    } 
+    echo '</table>';
 
     $conn->close();
     }
