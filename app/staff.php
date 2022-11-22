@@ -60,6 +60,8 @@
             <td> <font face="Arial">Place Number</font> </td> 
             <td> <font face="Arial">Room Number</font> </td> 
             <td> <font face="Arial">Rent Rate</font> </td> 
+            <td> <font face="Arial">Hall Number</font> </td> 
+            <td> <font face="Arial">Flat Number</font> </td> 
         </tr>';
 
     if ($result = $conn->query($sql)) {
@@ -67,17 +69,85 @@
             $RoomNumber = $row["room_number"];
             $PlaceNumber = $row["place_number"];
             $RentRate = $row["monthly_rent_rate"];
+            $HallNumber = $row["hall_number"];
+            $FlatNumber = $row["flat_number"];
 
             echo '<tr> 
                     <td>'.$RoomNumber.'</td> 
                     <td>'.$PlaceNumber.'</td> 
                     <td>'.$RentRate.'</td> 
+                    <td>'.$HallNumber.'</td> 
+                    <td>'.$FlatNumber.'</td> 
                 </tr>';
         }
         $result->free();
     } 
     echo '</table>';
+    ?>
 
+    <h4>Halls of Residence</h4>
+    <?php
+    include 'dbconfig.php';
+
+    $sql = "select * from halls_of_residence";
+    echo '<table class="table table-striped" border="0" cellspacing="2" cellpadding="2"> 
+        <tr> 
+            <td> <font face="Arial">Hall Name</font> </td> 
+            <td> <font face="Arial">Manager Number</font> </td> 
+            <td> <font face="Arial">Street</font> </td> 
+            <td> <font face="Arial">City</font> </td> 
+        </tr>';
+
+    if ($result = $conn->query($sql)) {
+        while ($row = $result->fetch_assoc()) {
+            $HallName = $row["hall_name"];
+            $HallNumber = $row["hall_number"];
+            $ManagerNumber = $row["manager_number"];
+            $Street = $row["street"];
+            $City = $row["city"];
+
+            echo '<tr> 
+                    <td>'.$HallNumber.'</td> 
+                    <td>'.$HallName.'</td> 
+                    <td>'.$ManagerNumber.'</td> 
+                    <td>'.$Street.'</td> 
+                    <td>'.$City.'</td> 
+                </tr>';
+        }
+        $result->free();
+    } 
+    echo '</table>';
+    ?>
+
+<h4>Halls of Residence</h4>
+    <?php
+    include 'dbconfig.php';
+
+    $sql = "select * from student_flats";
+    echo '<table class="table table-striped" border="0" cellspacing="2" cellpadding="2"> 
+        <tr> 
+        <td> <font face="Arial">Street</font> </td> 
+        <td> <font face="Arial">City</font> </td> 
+        <td> <font face="Arial">Number of Single Bedrooms</font> </td> 
+        </tr>';
+
+    if ($result = $conn->query($sql)) {
+        while ($row = $result->fetch_assoc()) {
+            $Street = $row["street"];
+            $FlatNumber = $row["flat_number"];
+            $City = $row["city"];
+            $NoOfSingleBedrooms = $row["number_of_single_bedrooms"];
+
+            echo '<tr> 
+                    <td>'.$FlatNumber.'</td> 
+                    <td>'.$Street.'</td> 
+                    <td>'.$City.'</td> 
+                    <td>'.$NoOfSingleBedrooms.'</td> 
+                </tr>';
+        }
+        $result->free();
+    } 
+    echo '</table>';
     ?>
 
     <h4>Flat Inspections</h4>
