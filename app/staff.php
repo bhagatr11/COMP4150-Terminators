@@ -27,16 +27,22 @@
         <tr> 
             <td> <font face="Arial">Lease Number</font> </td> 
             <td> <font face="Arial">Lease Duration</font> </td> 
+            <td> <font face="Arial">Date of Entry</font> </td> 
+            <td> <font face="Arial">Date of Exit</font> </td> 
         </tr>';
 
     if ($result = $conn->query($sql)) {
         while ($row = $result->fetch_assoc()) {
             $LeaseNumber = $row["lease_number"];
             $LeaseDuration = $row["lease_duration"];
+            $DoEntry = $row["date_of_entry"];
+            $DoExit = $row["date_of_exit"];
 
             echo '<tr> 
                     <td>'.$LeaseNumber.'</td> 
                     <td>'.$LeaseDuration.'</td> 
+                    <td>'.$DoEntry.'</td> 
+                    <td>'.$DoExit.'</td> 
                 </tr>';
         }
         $result->free();
