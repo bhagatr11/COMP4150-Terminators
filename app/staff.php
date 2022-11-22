@@ -78,7 +78,50 @@
     } 
     echo '</table>';
 
-    $conn->close();
     ?>
+
+    <h4>Flat Inspections</h4>
+        <?php
+            include 'dbconfig.php';
+            
+            $sql = "select * from student_flat_inspections";
+            
+            echo '<table class="table table-striped" border="0" cellspacing="2" cellpadding="2"> 
+                <tr> 
+                    <td> <font face="Arial">Inspection Number</font> </td> 
+                    <td> <font face="Arial">Staff Number</font> </td> 
+                    <td> <font face="Arial">Inspection Date</font> </td> 
+                    <td> <font face="Arial">Satisfactory Condition</font> </td> 
+                    <td> <font face="Arial">Addication Comments</font> </td> 
+                    <td> <font face="Arial">Flat Number</font> </td> 
+                </tr>';
+
+            if ($result = $conn->query($sql)) {
+                while ($row = $result->fetch_assoc()) {
+                    $InspectionNumber = $row["inspection_number"];
+                    $StaffNumber = $row["staff_number"];
+                    $InspectionDate = $row["inspection_date"];
+                    $SatisfactoryCondition = $row["satisfactory_condition"];
+                    $AdditionalComments = $row["additional_comments"];
+                    $FlatNumber = $row["flat_number"];
+                    
+                    
+                    echo '<tr> 
+                            <td>'.$InspectionNumber.'</td> 
+                            <td>'.$StaffNumber.'</td> 
+                            <td>'.$InspectionDate.'</td> 
+                            <td>'.$SatisfactoryCondition.'</td> 
+                            <td>'.$AdditionalComments.'</td> 
+                            <td>'.$FlatNumber.'</td>  
+                        </tr>';
+                }
+
+                $result->free();
+            } 
+
+            echo '</table>';
+            
+            $conn->close();
+        ?>
 </body>
 </html>
