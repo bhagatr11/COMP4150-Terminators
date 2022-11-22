@@ -18,6 +18,7 @@
 <body>
     <?php include('nav.php') ?>
     <h2>Staff Menu</h2>
+    <a href="add_room.php">Add Room</a><br/>
     <a href="add_lease.php">Add Lease</a><br/>
     <a href="add_inspection.php">Add Inspection</a>
     <h4>Current Leases</h4>
