@@ -20,7 +20,7 @@
     <div id="webform">
     <h2>Student Menu</h2>
     <form method="post" action="">
-        <input type="text" name="id" id="id" placeholder="Enter student ID">
+        <input type="text" name="id" id="id" placeholder="Enter student number">
         <button type="submit" name="submit" id="submit">Find</button>
     </form>
     </div>

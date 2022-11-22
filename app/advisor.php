@@ -18,24 +18,36 @@
 <body>
     <?php include('nav.php') ?>
     <h2>Advisor Menu</h2>
+    <form method="post" action="">
+        <input type="text" name="id" id="id" placeholder="Enter advisor number">
+        <button type="submit" name="submit" id="submit">Find</button>
+    </form>
+
     <?php
     include 'dbconfig.php';
+    if(isset($_POST["submit"])){
 
-    $sql = "select * from student";
+    $sql = "select * from student where advisor_number=".$_POST["id"];
     echo '<table class="table table-striped" border="0" cellspacing="2" cellpadding="2"> 
         <tr> 
             <td> <font face="Arial">First Name</font> </td> 
             <td> <font face="Arial">Last Name</font> </td> 
+            <td> <font face="Arial">Student Category</font> </td> 
+            <td> <font face="Arial">Course</font> </td> 
         </tr>';
 
     if ($result = $conn->query($sql)) {
         while ($row = $result->fetch_assoc()) {
             $StudentFirstName = $row["first_name"];
             $StudentLastName = $row["last_name"];
+            $Category = $row["student_category"];
+            $Course = $row["course"];
 
             echo '<tr> 
                     <td>'.$StudentFirstName.'</td> 
                     <td>'.$StudentLastName.'</td> 
+                    <td>'.$Category.'</td> 
+                    <td>'.$Course.'</td> 
                 </tr>';
         }
         $result->free();
@@ -43,6 +55,7 @@
     echo '</table>';
 
     $conn->close();
+    }
     ?>
 </body>
 </html>
