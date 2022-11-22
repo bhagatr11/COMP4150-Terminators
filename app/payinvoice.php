@@ -21,14 +21,17 @@
             $conn->autocommit(FALSE);
             $conn->query("update invoice set payment_received = 1, date_of_payment = CURDATE(), method_of_payment = '".$_POST['method']."' where student_number = ".$_POST["id"].";");
             $conn->commit();
-            echo "Invoice Payed!";
+            echo "Invoice Paid!";
         }
         catch(Exception $e){
             $conn->rollback();
             echo $e->getMessage();
             exit();
-        }        
+        }
+        echo '<form method="POST" action="viewinvoice.php">
+                <input type="hidden" name="id" id="id" value='.$_POST["id"].'>
+                <button type="submit" name="submit" id="submit">Back</button>
+            </form>';        
     ?>
-    <a href="student.php">Return to Student Menu</a>
 </body>
 </html>

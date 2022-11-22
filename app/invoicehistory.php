@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Menu</title>
+    <title>My Invoice History</title>
     <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"/>
 
@@ -16,51 +16,44 @@
 
 </head>
 <body>
-    <?php include('nav.php') ?>
-    <div id="webform">
-    <h2>Student Menu</h2>
-    <form method="post" action="">
-        <input type="text" name="id" id="id" placeholder="Enter student number">
-        <button type="submit" name="submit" id="submit">Find</button>
-    </form>
-    </div>
     <?php
     include 'dbconfig.php';
     if(isset($_POST["submit"])){
-        $student = "select * from student where student_number =".$_POST["id"];
-
-        echo '<h4>Student Info</h4>';
+        $sql = "select * from invoice where student_number =".$_POST["id"]." and payment_received = 1;";
+        echo '<h4>Paid Invoices</h4>';
         echo '<table class="table table-striped" border="0" cellspacing="2" cellpadding="2">
             <tr>
-                <td> <font face="Arial">First Name</font> </td>
-                <td> <font face="Arial">Last Name</font> </td>
+                <td> <font face="Arial">Invoice Number</font> </td>
+                <td> <font face="Arial">Lease Number</font> </td>
+                <td> <font face="Arial">Payment Method</font> </td>
+                <td> <font face="Arial">Date Of Payment</font> </td>
+                <td> <font face="Arial">Amount Paid</font> </td>
             </tr>';
-        if ($result = $conn->query($student)) {
+
+        if ($result = $conn->query($sql)) {
             while ($row = $result->fetch_assoc()) {
-                $FName = $row["first_name"];
-                $LName = $row["last_name"];
+                $invoice = $row["invoice_number"];
+                $lease = $row["lease_number"];
+                $method = $row["method_of_payment"];
+                $date = $row["date_of_payment"];
+                $amount = $row["payment_due"];
 
                 echo '<tr> 
-                        <td>'.$FName.'</td> 
-                        <td>'.$LName.'</td> 
+                        <td>'.$invoice.'</td> 
+                        <td>'.$lease.'</td> 
+                        <td>'.$method.'</td> 
+                        <td>'.$date.'</td> 
+                        <td>'.$amount.'</td>
                     </tr>';
             }
-            $result->free();
-        }
+        $result->free();
+        } 
         echo '</table><br>
+        
         <form method="POST" action="viewinvoice.php">
             <input type="hidden" name="id" id="id" value='.$_POST["id"].'>
-            <button type="submit" name="submit" id="submit">View Invoice</button>
-        </form>
-        <form method="POST" action="viewroom.php">
-            <input type="hidden" name="id" id="id" value='.$_POST["id"].'>
-            <button type="submit" name="submit" id="submit">View Room</button>
-        </form>
-        <form method="POST" action="viewlease.php">
-            <input type="hidden" name="id" id="id" value='.$_POST["id"].'>
-            <button type="submit" name="submit" id="submit">View Lease</button>
+            <button type="submit" name="submit" id="submit">Back</button>
         </form>';
-    $conn->close();
     }
     ?>
 </body>

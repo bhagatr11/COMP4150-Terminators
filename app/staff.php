@@ -96,6 +96,7 @@
     $sql = "select * from halls_of_residence";
     echo '<table class="table table-striped" border="0" cellspacing="2" cellpadding="2"> 
         <tr> 
+            <td></td>
             <td> <font face="Arial">Hall Name</font> </td> 
             <td> <font face="Arial">Manager Number</font> </td> 
             <td> <font face="Arial">Street</font> </td> 
@@ -123,13 +124,14 @@
     echo '</table>';
     ?>
 
-<h4>Halls of Residence</h4>
+<h4>Student Flats</h4>
     <?php
     include 'dbconfig.php';
 
     $sql = "select * from student_flats";
     echo '<table class="table table-striped" border="0" cellspacing="2" cellpadding="2"> 
-        <tr> 
+        <tr>
+        <td></td> 
         <td> <font face="Arial">Street</font> </td> 
         <td> <font face="Arial">City</font> </td> 
         <td> <font face="Arial">Number of Single Bedrooms</font> </td> 

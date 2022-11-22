@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Menu</title>
+    <title>My Invoice</title>
     <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"/>
 
@@ -16,52 +16,46 @@
 
 </head>
 <body>
-    <?php include('nav.php') ?>
-    <div id="webform">
-    <h2>Student Menu</h2>
-    <form method="post" action="">
-        <input type="text" name="id" id="id" placeholder="Enter student number">
-        <button type="submit" name="submit" id="submit">Find</button>
-    </form>
-    </div>
     <?php
     include 'dbconfig.php';
     if(isset($_POST["submit"])){
-        $student = "select * from student where student_number =".$_POST["id"];
-
-        echo '<h4>Student Info</h4>';
+        echo '<h4>Invoice</h4>';
         echo '<table class="table table-striped" border="0" cellspacing="2" cellpadding="2">
             <tr>
-                <td> <font face="Arial">First Name</font> </td>
-                <td> <font face="Arial">Last Name</font> </td>
-            </tr>';
-        if ($result = $conn->query($student)) {
+                <td> <font face="Arial">Invoice Number</font> </td>
+                <td> <font face="Arial">Student Number</font> </td>
+                <td> <font face="Arial">Payment Due</font> </td>
+            </tr>
+            <form method="post" action="payinvoice.php">
+                <input type="hidden" name="id" value='.$_POST["id"].'>
+                <input type="radio" id="Debit" name="method" value="Debit">
+                <label for="Debit">Debit</label><br>
+                <input type="radio" id="Credit" name="method" value="Credit">
+                <label for="Credit">Credit</label><br>
+                <button type="submit" name="submit" id="submit">Pay Invoice</button>
+            </form>';
+        $sql = "select * from invoice where student_number =".$_POST["id"]." and payment_received = 0;";
+        if($result = $conn->query($sql)) {
             while ($row = $result->fetch_assoc()) {
-                $FName = $row["first_name"];
-                $LName = $row["last_name"];
+                $InvoiceNumber = $row["invoice_number"];
+                $StudentNumber = $row["student_number"];
+                $PaymentDue = $row["payment_due"];
 
                 echo '<tr> 
-                        <td>'.$FName.'</td> 
-                        <td>'.$LName.'</td> 
+                        <td>'.$InvoiceNumber.'</td> 
+                        <td>'.$StudentNumber.'</td> 
+                        <td>'.$PaymentDue.'</td> 
                     </tr>';
             }
             $result->free();
-        }
+        } 
         echo '</table><br>
-        <form method="POST" action="viewinvoice.php">
+        <form method="POST" action="invoicehistory.php">
             <input type="hidden" name="id" id="id" value='.$_POST["id"].'>
-            <button type="submit" name="submit" id="submit">View Invoice</button>
-        </form>
-        <form method="POST" action="viewroom.php">
-            <input type="hidden" name="id" id="id" value='.$_POST["id"].'>
-            <button type="submit" name="submit" id="submit">View Room</button>
-        </form>
-        <form method="POST" action="viewlease.php">
-            <input type="hidden" name="id" id="id" value='.$_POST["id"].'>
-            <button type="submit" name="submit" id="submit">View Lease</button>
+            <button type="submit" name="submit" id="submit">View Invoice History</button>
         </form>';
-    $conn->close();
     }
     ?>
+    <a href="student.php">Back</a>
 </body>
 </html>
