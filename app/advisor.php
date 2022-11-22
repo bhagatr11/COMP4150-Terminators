@@ -18,6 +18,7 @@
 <body>
     <?php include('nav.php') ?>
     <h2>Advisor Menu</h2>
+    <a href="add_advisor.php">Add advisor</a><br/>
     <form method="post" action="">
         <input type="text" name="id" id="id" placeholder="Enter advisor number">
         <button type="submit" name="submit" id="submit">Find</button>
