@@ -19,11 +19,16 @@
     <?php include('nav.php') ?>
     <div id="webform">
     <h2>Student Menu</h2>
+    <form method="post" action="">
+        <input type="text" name="id" id="id" placeholder="Enter student id">
+        <button type="submit" name="submit" id="submit">Find</button>
+    </form>
     </div>
     <?php
     include 'dbconfig.php';
+    if(isset($_POST["submit"])){
 
-    $sql = "select * from invoice";
+    $sql = "select * from invoice where student_number =".$_POST["id"];
     echo '<table class="table table-striped" border="0" cellspacing="2" cellpadding="2"> 
         <tr> 
             <td> <font face="Arial">Invoice Number</font> </td> 
@@ -48,6 +53,8 @@
     echo '</table>';
 
     $conn->close();
+
+    }
     ?>
 </body>
 </html>
