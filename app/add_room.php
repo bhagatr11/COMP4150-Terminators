@@ -17,7 +17,7 @@
 <body>
     <?php include('nav.php') ?>
     <h2>Staff Menu</h2>
-    <h4>Add Lease</h4>
+    <h4>Add Room</h4>
     <form method="post" action="">
         <input type="text" name="room_number" id="room_number" placeholder="Enter room number">
         <input type="text" name="monthly_rent_rate" id="monthly_rent_rate" placeholder="Enter monthly rent rate">
