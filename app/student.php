@@ -20,7 +20,7 @@
     <div id="webform">
     <h2>Student Menu</h2>
     <form method="post" action="">
-        <input type="text" name="id" id="id" placeholder="Enter student id">
+        <input type="text" name="id" id="id" placeholder="Enter student ID">
         <button type="submit" name="submit" id="submit">Find</button>
     </form>
     </div>
@@ -28,7 +28,9 @@
     include 'dbconfig.php';
     if(isset($_POST["submit"])){
 
+    // INVOICES
     $sql = "select * from invoice where student_number =".$_POST["id"];
+    echo '<h4>Invoices</h4>';
     echo '<table class="table table-striped" border="0" cellspacing="2" cellpadding="2"> 
         <tr> 
             <td> <font face="Arial">Invoice Number</font> </td> 
@@ -52,8 +54,63 @@
     } 
     echo '</table>';
 
-    $conn->close();
+    // LEASES
+    $sql = "select * from lease where student_number =".$_POST["id"];
+    echo '<h4>Current Lease</h4>';
+    echo '<table class="table table-striped" border="0" cellspacing="2" cellpadding="2"> 
+        <tr> 
+            <td> <font face="Arial">Lease Number</font> </td> 
+            <td> <font face="Arial">Student Number</font> </td>
+            <td> <font face="Arial">Lease Duration</font> </td> 
+        </tr>';
+    
+    if ($result = $conn->query($sql)) {
+        while ($row = $result->fetch_assoc()) {
+            $LeaseNumber = $row["lease_number"];
+            $StudentNumber = $row["student_number"];
+            $LeaseDuration = $row["lease_duration"];
 
+            echo '<tr> 
+                    <td>'.$LeaseNumber.'</td> 
+                    <td>'.$StudentNumber.'</td> 
+                    <td>'.$LeaseDuration.'</td> 
+                </tr>';
+        }
+        $result->free();
+    }
+    echo '</table>';
+
+    // ROOM
+    $sql = "
+    select * from lease l 
+    left join rooms r on r.place_number = l.place_number
+    where l.student_number =".$_POST["id"];
+    echo '<h4>Current Room</h4>';
+    echo '<table class="table table-striped" border="0" cellspacing="2" cellpadding="2"> 
+        <tr> 
+            <td> <font face="Arial">Room Number</font> </td> 
+            <td> <font face="Arial">Hall Number</font> </td>
+            <td> <font face="Arial">Monthly Rent</font> </td> 
+        </tr>';
+    
+    if ($result = $conn->query($sql)) {
+        while ($row = $result->fetch_assoc()) {
+            $RoomNumber = $row["room_number"];
+            $HallNumber = $row["hall_number"];
+            $MonthlyRent = $row["monthly_rent_rate"];
+
+            echo '<tr> 
+                    <td>'.$RoomNumber.'</td> 
+                    <td>'.$HallNumber.'</td> 
+                    <td>'.$MonthlyRent.'</td> 
+                </tr>';
+        }
+        $result->free();
+    }
+    echo '</table>';
+
+
+    $conn->close();
     }
     ?>
 </body>
