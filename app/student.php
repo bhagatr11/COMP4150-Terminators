@@ -37,7 +37,7 @@
             <td> <font face="Arial">Student Number</font> </td>
             <td> <font face="Arial">Payment Due</font> </td>
         </tr>
-        <form method="post" action="paylease.php">
+        <form method="post" action="payinvoice.php">
             <input type="hidden" name="id" value='.$_POST["id"].'>
             <input type="radio" id="Debit" name="method" value="Debit">
             <label for="Debit">Debit</label><br>
