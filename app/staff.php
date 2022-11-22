@@ -18,6 +18,7 @@
 <body>
     <?php include('nav.php') ?>
     <h2>Staff Menu</h2>
+    <a href="add_lease.php">Add Lease</a>
     <h4>Current Leases</h4>
     <?php
     include 'dbconfig.php';
