@@ -47,7 +47,7 @@
         <input type="checkbox" name="special_needs" id="special_needs">
         <input type="text" name="course" id="course" placeholder="Enter student's course">
         <input type="text" name="advisor_number" id="advisor_number" placeholder="Enter student's advisor">
-        <button type="submit" name="submit" id="submit">Add Lease</button>
+        <button type="submit" name="submit" id="submit">Add Student</button>
     </form>
     <?php
     if(isset($_POST["submit"])){
